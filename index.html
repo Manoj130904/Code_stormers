@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BalanceBuddy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+            color: #00ffff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        header {
+            background-color: #1e1e1e;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        header nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        header nav a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: color 0.3s, transform 0.3s;
+        }
+        header nav a:hover {
+            color: #00ffff;
+            transform: scale(1.1);
+        }
+        .tab-content {
+            display: none;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+            margin-top: 70px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        .tab-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="number"] {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #424242;
+            border-radius: 5px;
+            background-color: #2c2c2c;
+            color: #e0e0e0;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        input[type="email"]:focus,
+        input[type="number"]:focus {
+            border-color: #4CAF50;
+            background-color: #383838;
+        }
+        input[type="submit"] {
+            width: 84%;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #00ffff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+        .form-group {
+            margin: 20px 0;
+        }
+        select {
+            width: 60%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #424242;
+            border-radius: 5px;
+            background-color: #2c2c2c;
+            color: #e0e0e0;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+        select:focus {
+            border-color: #4CAF50;
+            background-color: #383838;
+        }
+        footer {
+            background-color: #1e1e1e;
+            padding: 10px 0;
+            text-align: center;
+            color: #00ffff;
+            margin-top: 40px;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 1.0);
+        }
+        .error {
+            color: red;
+        }
+        .success {
+            color: green;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #000;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1 style="font-weight: bold; margin: 0; color: #e0e0e0;">BalanceBuddy</h1>
+        </div>
+        <nav>
+            <a onclick="showTab('home')" style="font-weight: bold; margin: 0 10px;">Home</a>
+            <a onclick="showTab('about')" style="font-weight: bold; margin: 0 10px;">About</a>
+            <a onclick="showTab('services')" style="font-weight: bold; margin: 0 10px;">Services</a>
+            <a id="planTab" style="display:none; font-weight: bold; margin: 0 10px;" onclick="showTab('plans')">Plans</a>
+            <a onclick="showTab('login')" style="font-weight: bold; margin: 0 10px;">Login</a>
+            <a onclick="showTab('register')" style="font-weight: bold; margin: 0 10px;">Register</a>
+        </nav>
+    </header>
+    <div class="container">
+        <div id="home" class="tab-content active">
+           <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BalanceBuddy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.0;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            transition: background-color 0.5s ease;
+        }
+
+        h1, h2 {
+            color: #00ffff;
+            transition: color 0.3s ease;
+        }
+
+        p {
+            margin: 0 0 20px;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+
+        ul {
+            padding-left: 10px;
+            margin-bottom: 10px;
+        }
+
+        ul li {
+            background: #fff;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        ul li:hover {
+            background-color: #00ffff;
+            transform: scale(1.02);
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Adding animations */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .slide-up {
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.5s forwards;
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+   <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BalanceBuddy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.0;
+            margin: 0;
+            padding: 0;
+            background-color: #121212; /* Dark background */
+            color: #e0e0e0; /* Light text color */
+            transition: background-color 0.5s ease;
+        }
+
+        h1, h2 {
+            color: #e0e0e0; /* Light text color */
+            transition: color 0.3s ease;
+        }
+
+        p {
+            margin: 0 0 20px;
+            color: b0b0b0; /* Slightly lighter text color */
+            transition: color 0.3s ease;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        ul li {
+            background: #1e1e1e; /* Dark list item background */
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        ul li:hover {
+            background-color: #333333; /* Lighter background on hover */
+            transform: scale(1.02);
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Adding animations */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .slide-up {
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.5s forwards;
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+   <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BalanceBuddy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 0.95;
+            margin: 0;
+            padding: 0;
+            background-color: #121212; /* Dark background */
+            color: #e0e0e0; /* Light text color */
+            transition: background-color 0.5s ease;
+        }
+
+        h1 {
+            font-family: 'Times New Roman', Times, serif; /* Times New Roman font */
+            font-weight: bold; /* Bold text */
+            font-size: 3em; /* Larger font size for prominence */
+            color: #ffffff; /* White color to stand out */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Shadow for better visibility */
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            margin: 0;
+            padding: 5px 0;
+            text-align: center; /* Center align */
+        }
+
+        h2 {
+            color: #e0e0e0; /* Light text color */
+            transition: color 0.3s ease;
+        }
+
+        p {
+            margin: 0 0 20px;
+            color: #b0b0b0; /* Slightly lighter text color */
+            transition: color 0.3s ease;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        ul li {
+            background: #1e1e1e; /* Dark list item background */
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        ul li:hover {
+            background-color: #00ffff; /* Lighter background on hover */
+            transform: scale(1.02);
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Adding animations */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .slide-up {
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.5s forwards;
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BalanceBuddy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #121212; /* Dark background */
+            color: #e0e0e0; /* Light text color */
+            transition: background-color 0.5s ease;
+        }
+
+        h1 {
+            font-family: 'Times New Roman', Times, serif; /* Times New Roman font */
+            font-weight: bold; /* Bold text */
+            font-size: 3em; /* Larger font size for prominence */
+            color: #ffffff; /* White color to stand out */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Shadow for better visibility */
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            margin: 20px 0; /* Margin to create space around the header */
+            text-align: left; /* Align text to the left */
+            padding-left: 20px; /* Space from the left edge */
+        }
+
+        h2 {
+            color: #e0e0e0; /* Light text color */
+            transition: color 0.3s ease;
+        }
+
+        p {
+            margin: 0 0 20px;
+            color: #b0b0b0; /* Slightly lighter text color */
+            transition: color 0.3s ease;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        ul li {
+            background: #1e1e1e; /* Dark list item background */
+            border-radius: 5px;
+            padding: 5px;
+            margin-bottom: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        ul li:hover {
+            background-color: #333333; /* Lighter background on hover */
+            transform: scale(1.00);
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        img:hover {
+            transform: scale(0.95);
+        }
+
+        /* Adding animations */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .slide-up {
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.5s forwards;
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="fade-in" style="font-family: 'Times New Roman', Times, serif; font-weight: bold; font-size: 5em; color: #ffffff; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); text-align: center;">Welcome to BalanceBuddy</h1>
+    <h2 class="fade-in"><strong>Your ultimate fitness buddy</strong></h2>
+<img src="s.jpg" alt="BalanceBuddy" align="center" width="2000" height="1000" class="fade-in">
+    <h2 class="fade-in">Our Vision</h2>
+    
+    <ul>
+        <li class="slide-up"><strong>Empowering Wellness:</strong> "To be the leading online resource for holistic health and wellness, empowering individuals to achieve their best selves through informed and proactive choices."</li>
+        <li class="slide-up"><strong>Accessible Health for All:</strong> "To create a world where everyone has access to the knowledge and tools needed for optimal health and well-being, regardless of location or background."</li>
+        <li class="slide-up"><strong>Innovative Health Solutions:</strong> "To revolutionize the way people manage their health by providing innovative, science-based solutions and personalized care through our online platform."</li>
+        <li class="slide-up"><strong>Global Health Community:</strong> "To build a global community dedicated to health and wellness, fostering connections, support, and shared knowledge to improve lives everywhere."</li>
+        <li class="slide-up"><strong>Sustainable Well-being:</strong> "To lead the way in sustainable health practices, helping individuals and communities thrive through environmentally conscious and health-focused initiatives."</li>
+    </ul>
+
+    <h2 class="fade-in">Our Mission</h2>
+
+    <ul>
+        <li class="slide-up"><strong>Comprehensive Health Resources:</strong> "Our mission is to provide comprehensive, accurate, and up-to-date health information and resources, enabling users to make informed decisions about their health and well-being."</li>
+        <li class="slide-up"><strong>Personalized Wellness:</strong> "We strive to offer personalized wellness plans and expert advice, tailored to the unique needs of each user, promoting a balanced and healthy lifestyle."</li>
+        <li class="slide-up"><strong>Innovative Health Solutions:</strong> "To revolutionize the way people manage their health by providing innovative, science-based solutions and personalized care through our online platform."</li>
+        <li class="slide-up"><strong>Community Support:</strong> "We are committed to fostering a supportive online community where users can share experiences, find encouragement, and connect with others on their health journeys."</li>
+        <li class="slide-up"><strong>Education and Prevention:</strong> "Our mission is to educate and empower individuals to prevent illness and maintain health through accessible and actionable information on nutrition, exercise, mental health, and more."</li>
+    </ul>
+            <button class="button" onclick="showTab('about')">Join us</button>
+</body>
+</html>
+
+
+
+</body>
+</html>
+
+            
+        </div>
+
+        <div id="about" class="tab-content">
+<title>Center Align Heading</title>
+<body>
+ <title>Center Align Heading</title>
+        h1 {
+            text-align: center;
+        }<img src="a.jpeg" alt="BalanceBuddy" align="center" width="2000" height="1000" class="fade-in">
+
+            <h3><strong>Our Story:</strong></h3>
+
+<p>At BalanceBuddy, our journey began with a clear purpose: to empower individuals to take charge of their health and well-being through reliable, innovative, and personalized solutions. We are a dedicated team of fitness enthusiasts, healthcare professionals, and tech experts who are passionate about making wellness accessible to everyone.</p>
+
+<p>Our platform was created to bridge the gap between cutting-edge health research and practical, everyday wellness solutions. We believe that everyone deserves access to quality health information and support, regardless of their starting point or goals.</p>
+
+<h3><strong>Our Values:</strong></h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Values</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        p {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 2s forwards;
+            margin: 20px 0;
+        }
+
+        p:nth-child(1) {
+            animation-delay: 0.5s;
+        }
+
+        p:nth-child(2) {
+            animation-delay: 1s;
+        }
+
+        p:nth-child(3) {
+            animation-delay: 1.5s;
+        }
+
+        p:nth-child(4) {
+            animation-delay: 2s;
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <p><strong>Integrity:</strong> We prioritize honesty and transparency in all our practices. Our commitment to providing trustworthy and scientifically-backed information ensures you can rely on us for your health and wellness needs.</p>
+    <p><strong>Empathy:</strong> We understand that every health journey is unique. Our approach is designed to be compassionate and tailored to meet the individual needs of each user.</p>
+    <p><strong>Excellence:</strong> We strive for the highest standards in everything we do. From the quality of our content to the functionality of our tools, we are dedicated to delivering exceptional value and service.</p>
+    <p><strong>Innovation:</strong> We stay at the forefront of health and wellness trends, continuously exploring new ways to enhance our offerings and improve your experience.</p>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paragraph Animation</title>
+    <style>
+        .animated-paragraph {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 2s forwards;
+        }
+
+        .animated-paragraph:nth-child(1) {
+            animation-delay: 0.3s;
+        }
+
+        .animated-paragraph:nth-child(2) {
+            animation-delay: 1s;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h3><strong>Join Our Community</strong></h3>
+
+    <p class="animated-paragraph">We invite you to explore our platform, engage with our resources, and connect with our vibrant community. Whether you’re seeking to enhance your fitness, manage a health condition, or simply improve your overall well-being, we are here to support you every step of the way.</p>
+    
+    <p class="animated-paragraph">Thank you for choosing BalanceBuddy as your trusted partner in health and wellness. Together, we can create a healthier and more fulfilling life!</p>
+                    <button class="button" onclick="showTab('register')">Get Started</button>
+
+</body>
+</html>
+        </div>
+
+        <div id="services" class="tab-content">
+          <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <center><img src="bb.jpg" alt="BalanceBuddy" align="center" width="300" height="300" class="fade-in"></center>
+    <title>Our Services</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        p {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        li {
+            width: 80%;
+            margin: 10px 0;
+            cursor: pointer;
+            text-align: left;
+            padding: 10px 0;
+        }
+
+        li:hover {
+            background-color: #f0f0f0;
+        }
+
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        input[type="checkbox"] + label {
+            display: block;
+            font-weight: bold;
+        }
+
+        input[type="checkbox"] + label + .info {
+            display: none;
+        }
+
+        input[type="checkbox"]:checked + label + .info {
+            display: block;
+            margin-top: 10px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h2>Our Services</h2>
+    <p>Explore our range of services tailored to help you achieve your fitness and health goals.</p>
+    <ul>
+        <li>
+            <input type="checkbox" id="service1">
+            <label for="service1">Personalized Nutrition Plans:</label>
+            <div class="info"><strong>Tailored meal plans that suit your dietary needs and preferences.</strong>
+<h3><b>Individual Assessment:</b></h3>
+<p>Health History: Evaluates past medical conditions, current health status, and any allergies or intolerances.</p>
+<p>Lifestyle Factors: Considers daily activity levels, work schedules, sleep patterns, and stress levels.</p>
+<p>Dietary Preferences: Takes into account personal food likes and dislikes, cultural practices, and ethical considerations (e.g., vegetarianism or veganism).</p>
+
+<h3><strong>Nutritional Needs:</strong></h3>
+<p>Macronutrient Distribution: Tailors the proportion of carbohydrates, proteins, and fats based on individual health goals, such as weight loss, muscle gain, or maintenance.</p>
+<p>Micronutrient Requirements: Ensures adequate intake of vitamins and minerals based on deficiencies, age, gender, and health conditions.</p>
+
+<h3><strong>Goal Setting:</strong></h3>
+<p>Weight Management: Provides strategies for weight loss, gain, or maintenance, aligning caloric intake with energy expenditure.</p>
+<p>Performance Enhancement: Optimizes nutrition for athletic performance, endurance, and recovery.</p>
+<p>Chronic Disease Management: Tailors dietary choices to manage or mitigate conditions such as diabetes, hypertension, or cardiovascular disease.</p>
+
+<h3><strong>Customized Meal Plans:</strong></h3>
+<p>Recipe Recommendations: Offers recipes that meet individual nutritional needs and preferences, including portion sizes and preparation methods.</p>
+<p>Shopping Lists: Provides grocery lists based on the selected recipes and meal plan, making it easier to purchase the right ingredients.</p>
+<p>Meal Timing: Suggests meal and snack times to align with individual metabolism and lifestyle.</p>
+</div>
+        </li>
+        <li>
+            <input type="checkbox" id="service2">
+            <label for="service2">Fitness Coaching:</label>
+            <div class="info">Expert guidance on exercise routines that fit your goals and lifestyle.
+<h3><strong>Fitness Goals:</strong></h3>
+<p>Weight Loss: Creating a program focused on burning calories and reducing body fat.</p>
+<p>Muscle Gain: Designing workouts that promote muscle hypertrophy and strength.</p>
+<p>Endurance Improvement: Incorporating exercises that enhance cardiovascular fitness and stamina.</p>
+<p>General Fitness: Providing a balanced routine that covers various aspects of physical health.</p>
+
+<h3><strong>Current Fitness Level:</strong></h3>
+<p>Beginner: Introducing basic exercises and gradually increasing intensity.</p>
+<p>Intermediate: Tailoring workouts to improve performance and achieve more advanced goals.</p>
+<p>Advanced: Designing complex routines that challenge and push physical limits.</p>
+
+<h3><strong>Custom Workout Design</strong></h3>
+<h3>Exercise Selection:</h3>
+<p>Cardiovascular Exercises: Including activities such as running, cycling, or swimming to improve heart health and endurance.</p>
+<p>Strength Training: Incorporating weight lifting or bodyweight exercises to build muscle and strength.</p>
+<p>Flexibility and Balance: Adding stretches, yoga, or balance exercises to enhance overall physical stability and flexibility.</p>
+
+<h3><strong>Program Structure:</strong></h3>
+<p>Frequency: Determining how often you should work out each week based on your goals and schedule.</p>
+<p>Intensity: Adjusting the difficulty of exercises to ensure they align with your fitness level and objectives.</p>
+<p>Duration: Setting appropriate workout lengths to fit within your available time while still providing effective exercise.</p>
+<p>Variety: Incorporating a range of exercises to prevent boredom and target different muscle groups.</p>
+</div>        
+        </li>
+        <li>
+            <input type="checkbox" id="service4">
+            <label for="service4">Health Tracking:</label>
+            <div class="info">Tools to monitor your progress and stay on track with your health goals.
+<h3><strong>Wellness Programs:</strong></h3> 
+<p>Some workplaces or health insurance providers offer wellness programs that include tools for monitoring health metrics, participating in challenges, or accessing resources like health coaching.</p>
+<h3><strong> BMI Calculator:</strong></h3>
+<p>Our website features a user-friendly BMI calculator that allows you to quickly determine your current BMI based on your height and weight. This serves as a starting point to understand where you stand and set realistic goals.</p>
+<h3><strong>Dietary Recommendations:</strong></h3>
+<p>Based on your BMI and health goals (whether it's weight loss, maintenance, or muscle gain), our website suggests personalized dietary recommendations. These recommendations are tailored to ensure you consume the right balance of nutrients while supporting your BMI goals.</p>
+</div>
+        </li>
+</body>
+</html>
+
+                    </div>
+
+        
+
+        <div id="login" class="tab-content">
+            <h2>Login to BalanceBuddy</h2>
+            <form id="loginForm">
+                <input type="text" id="loginUsername" name="username" placeholder="Username" required><br>
+                <input type="password" id="loginPassword" name="password" placeholder="Password" required><br>
+                <input type="submit" value="Login">
+                <p id="loginMessage" class="error"></p>
+            </form>
+        </div>
+<div id="plans" class="tab-content">
+    <h2>Workout Plans</h2>
+    <div>
+        <h3>Enter Your Details</h3>
+        <form id="bmiForm">
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required>
+            </div>
+            <div class="form-group">
+                <label for="height">Height (cm):</label>
+                <input type="number" id="height" name="height" required>
+            </div>
+            <div class="form-group">
+                <label for="weight">Weight (kg):</label>
+                <input type="number" id="weight" name="weight" required>
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="" disabled selected>Select your gender</option>
+                    <option value="female">Female</option>
+                    <option value="male">Male</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="diet">Diet Preference:</label>
+                <select id="diet" name="diet" required>
+                    <option value="" disabled selected>Select your diet preference</option>
+                    <option value="vegetarian">Vegetarian</option>
+                    <option value="non-vegetarian">Non-Vegetarian</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Calculate BMI">
+            </div>
+        </form>
+        <p id="bmiResult"></p>
+    </div>
+    <div id="workoutPlan"></div>
+</div>
+        <div id="register" class="tab-content">
+            <h2>Register with BalanceBuddy</h2>
+            <form id="registerForm">
+                <input type="text" id="registerUsername" name="username" placeholder="Username" required><br>
+                <input type="password" id="registerPassword" name="password" placeholder="Password" required><br>
+                <input type="email" id="registerEmail" name="email" placeholder="Email" required><br>
+                <input type="submit" value="Register">
+                <p id="registerMessage" class="success"></p>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 BalanceBuddy. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function showTab(tabId) {
+            var tabs = document.getElementsByClassName('tab-content');
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var username = document.getElementById('loginUsername').value;
+            var password = document.getElementById('loginPassword').value;
+
+            // Assuming a successful login
+            document.getElementById('loginMessage').innerText = '';
+            document.getElementById('planTab').style.display = 'block';
+            showTab('home');
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var username = document.getElementById('registerUsername').value;
+            var password = document.getElementById('registerPassword').value;
+            var email = document.getElementById('registerEmail').value;
+
+            // Assuming successful registration
+            document.getElementById('registerMessage').innerText = 'Registration successful! You can now log in.';
+            showTab('login');
+        });
+
+        document.getElementById('bmiForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value) / 100;
+
+            const bmi = (weight / (height * height)).toFixed(2);
+            document.getElementById('bmiResult').innerText = 'Your BMI is ' + bmi;
+
+            let workoutPlan = '';
+
+            if (bmi < 18.5) {
+                workoutPlan = `
+                    <h3>Underweight Workout Plan</h3>
+                    <ul>
+                        <li>Focus on strength training exercises to build muscle mass.</li>
+                        <li>Include compound movements like squats, deadlifts, and bench presses.</li>
+                        <li>Gradually increase your calorie intake with healthy, nutrient-dense foods.</li>
+                        <li>Get enough rest and recovery between workouts.</li>
+                    </ul>
+                `;
+            } else if (bmi >= 18.5 && bmi < 24.9) {
+                workoutPlan = `
+                    <h3>Normal Weight Workout Plan</h3>
+                    <ul>
+                        <li>Maintain a balanced workout routine with a mix of cardio and strength training.</li>
+                        <li>Include exercises like running, cycling, weightlifting, and bodyweight exercises.</li>
+                        <li>Eat a balanced diet with a good mix of protein, carbs, and fats.</li>
+                        <li>Stay consistent and track your progress.</li>
+                    </ul>
+                `;
+            } else if (bmi >= 25 && bmi < 29.9) {
+                workoutPlan = `
+                    <h3>Overweight Workout Plan</h3>
+                    <ul>
+                        <li>Focus on cardiovascular exercises to burn calories and improve heart health.</li>
+                        <li>Incorporate activities like brisk walking, swimming, and HIIT (High-Intensity Interval Training).</li>
+                        <li>Add in some strength training to preserve muscle mass while losing fat.</li>
+                        <li>Pay attention to your diet, focusing on whole foods and portion control.</li>
+                    </ul>
+                `;
+            } else {
+                workoutPlan = `
+                    <h3>Obese Workout Plan</h3>
+                    <ul>
+                        <li>Start with low-impact cardio exercises to minimize joint stress, such as swimming or cycling.</li>
+                        <li>Gradually increase workout intensity as your fitness improves.</li>
+                        <li>Include strength training to build muscle and boost metabolism.</li>
+                        <li>Work with a healthcare provider or a fitness professional to create a safe and effective plan.</li>
+                    </ul>
+                `;
+            }
+
+            document.getElementById('workoutPlan').innerHTML = workoutPlan;
+        });
+
+        // Initial check to show the correct tab based on login status
+        checkLogin();
+    </script>
+</body>
+</html>
